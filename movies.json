@@ -1,1 +1,1 @@
-[{"Film name": "Hannes", "Rating": 10, "Year": 1996, "Poster": "loco"}]
+{"Hannes": {"Rating": 10, "Year": 1996, "Poster": "gang"}, "Anna": {"Rating": 5, "Year": 1996, "Poster": "lol"}}

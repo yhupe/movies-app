@@ -1,3 +1,5 @@
+import statistics
+
 class MovieApp:
     def __init__(self, storage):
         self._storage = storage
@@ -6,30 +8,34 @@ class MovieApp:
     def _command_list_movies(self):
         movies = self._storage.list_movies()
 
-        film_info = ""
+        titles = list(movies.keys())
 
-        for movie in movies:
-            film_info += f"Film title: {movie["Film name"]}\n"
-            film_info += f"Film rating: {movie["Rating"]}\n"
-            film_info += f"Year: {movie["Year"]}\n"
-            film_info += f"Poster: {movie["Poster"]}\n"
-
-        return film_info
-
-    def _command_add_movie(self):
-        movies = self._storage.add_movies()
-        pass
-
-    def _command_delete_movie(self):
-        movies = self._storage.delete_movies()
-        pass
-
-    def _command_update_movie(self):
-        movies = self._storage.update_movies()
-        pass
+        for title in titles:
+            print(title)
 
     def _command_movie_stats(self):
-        pass
+        movies = self._storage.list_movies()
+
+        sum_of_values = 0
+
+        movies_dict = {}
+
+        for movie, info in movies.items():
+            movies_dict[movie] = info["Rating"]
+
+        for rating in movies_dict.values():
+            sum_of_values += rating
+            average_rating = sum_of_values / len(movies_dict)
+        print(f"\nAverage rating: {average_rating}")
+
+        print(f"Median rating: {statistics.median(movies_dict.values())}")
+
+        max_rank = max(movies_dict, key=movies_dict.get)
+        print(f"Best rating -> {max_rank}: {movies_dict[max_rank]}")
+
+        min_rank = min(movies_dict, key=movies_dict.get)
+        print(f"Worst rating-> {min_rank}: {movies_dict[min_rank]}")
+        print()
 
     def _generate_website(self):
         pass

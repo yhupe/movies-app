@@ -9,7 +9,7 @@ class StorageJson(IStorage):
 
         if not os.path.exists(self.file_path):
             with open(self.file_path, "w") as fileobj:
-                json.dump([], fileobj)
+                json.dump({}, fileobj)
 
     def list_movies(self):
         """ Lists all movies in the instantiated database."""
@@ -25,18 +25,13 @@ class StorageJson(IStorage):
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
 
-            list_of_all_data = data.copy()
-
-        new_movie = {
-            "Film name": title,
+        data[title] = {
             "Rating": rating,
             "Year": year,
             "Poster": poster
         }
 
-        list_of_all_data.append(new_movie)
-
-        json_str = json.dumps(list_of_all_data)
+        json_str = json.dumps(data)
 
         with open(self.file_path, "w") as fileobj:
             fileobj.write(json_str)
