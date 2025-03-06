@@ -22,16 +22,32 @@ class MovieApp:
 
     def _command_add_movie(self, title):
 
-        query_string = f"&t={title}"
-        response = requests.get(URL + query_string)
-        response_json = response.json()
+        try:
+            query_string = f"&t={title}"
+            response = requests.get(URL + query_string)
+            response_json = response.json()
 
-        title = response_json["Title"]
-        year = response_json["Year"]
-        imdb_rating = float(response_json["Ratings"][0]["Value"][:2])
-        poster_link = response_json["Poster"]
+            if response_json['Response'] == "True":
 
-        self._storage.add_movie(title, imdb_rating, year, poster_link)
+                if response.status_code == 200:
+
+                    title = response_json["Title"]
+                    year = response_json["Year"]
+                    imdb_rating = float(response_json["Ratings"][0]["Value"][:2])
+                    poster_link = response_json["Poster"]
+
+                    self._storage.add_movie(title, imdb_rating, year, poster_link)
+                    print(f"Movie {title} added successfully.")
+
+                else:
+                    print(f"Error: API returned status code {response.status_code}")
+
+            else:
+                print(f"{response_json['Error']}")
+
+
+        except requests.exceptions.ConnectionError:
+            print("Error: connection to OMDb API failed!")
 
     def _command_delete_movie(self, title):
 
@@ -53,7 +69,8 @@ class MovieApp:
             average_rating = sum_of_values / len(movies_dict)
         print(f"\nAverage rating: {average_rating}")
 
-        print(f"Median rating: {statistics.median(movies_dict.values())}")
+        median_rating = statistics.median(map(float, movies_dict.values()))
+        print(f"Median rating: {median_rating}")
 
         max_rank = max(movies_dict, key=movies_dict.get)
         print(f"Best rating -> {max_rank}: {movies_dict[max_rank]}")

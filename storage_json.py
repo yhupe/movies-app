@@ -44,17 +44,10 @@ class StorageJson(IStorage):
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
 
-        list_of_all_data = data.copy()
+            if title in data.keys():
+                data.pop(title)
 
-        movie_index_to_be_removed = None
-
-        for index, movie in enumerate(list_of_all_data):
-            if movie["Film name"] == title:
-                movie_index_to_be_removed = index
-
-        list_of_all_data.pop(movie_index_to_be_removed)
-
-        json_str = json.dumps(list_of_all_data)
+        json_str = json.dumps(data)
 
         with open(self.file_path, "w") as fileobj:
             fileobj.write(json_str)

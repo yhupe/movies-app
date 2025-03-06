@@ -2,14 +2,16 @@ from movie_app import MovieApp
 from storage_json import StorageJson
 from storage_csv import StorageCSV
 
-storage = StorageJson('movies.json')
-storage2 = StorageCSV('movies.csv')
-movie_app = MovieApp(storage)
+storage_json = StorageJson('movies.json')
+storage_csv = StorageCSV('movies.csv')
+movie_app_json = MovieApp(storage_json)
+movie_app_csv = MovieApp(storage_csv)
 
-movie_app._command_add_movie("Titanic")
-movie_app._command_add_movie("James Bond")
-movie_app._command_add_movie("Joker")
 
-movie_app._command_movie_stats()
+
+
+movie_app_csv._command_add_movie("Halt die schnauze")
+
+
 
 
