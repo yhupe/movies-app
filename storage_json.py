@@ -17,9 +17,10 @@ class StorageJson(IStorage):
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
 
-            return data
+        return data
 
-    def add_movie(self, title, year, rating, poster):
+
+    def add_movie(self, title, rating, year, poster):
         """ Adds a movie and its information to the database"""
 
         with open(self.file_path, "r") as fileobj:

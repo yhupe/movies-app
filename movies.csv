@@ -1,9 +1,4 @@
 Title,Rating,Year,Poster
-Movie1,2025,1000,Poster
-Movie2,2026,1000,Poster
-Movie3,2027,1000,Poster
-Movie1,999,1000,Poster
-Movie2,2026,1000,Poster
-Movie3,2027,1000,Poster
-Movie1,999,1000,Poster
-Movie3,2027,1000,Poster
+Titanic,7.0,1997,https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_SX300.jpg
+James Bond,5.0,2015,https://m.media-amazon.com/images/M/MV5BM2IwZDRiOTAtNTUxOC00ZWQxLThlYTYtZTM2NTRmMjEzNmQwXkEyXkFqcGdeQXVyODAzNzAwOTU@._V1_SX300.jpg
+Joker,8.0,2019,https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_SX300.jpg

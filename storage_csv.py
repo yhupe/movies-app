@@ -21,8 +21,11 @@ class StorageCSV(IStorage):
             data = {}
 
             next(reader)
+
             for line in reader:
                 data[line[0]] = {'Rating':line[1], 'Year':line[2], 'Poster':line[3]}
+            #slicing the IMDb rating 'xx.x/10' to xx.x
+            data[line[0]]['Rating'] = line[1][:2]
 
             return data
 

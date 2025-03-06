@@ -28,10 +28,10 @@ class MovieApp:
 
         title = response_json["Title"]
         year = response_json["Year"]
-        imdb_rating = response_json["Ratings"][0]["Value"]
+        imdb_rating = float(response_json["Ratings"][0]["Value"][:2])
         poster_link = response_json["Poster"]
 
-        self._storage.add_movie(title, year, imdb_rating, poster_link)
+        self._storage.add_movie(title, imdb_rating, year, poster_link)
 
     def _command_delete_movie(self, title):
 
@@ -49,7 +49,7 @@ class MovieApp:
             movies_dict[movie] = info["Rating"]
 
         for rating in movies_dict.values():
-            sum_of_values += rating
+            sum_of_values += float(rating)
             average_rating = sum_of_values / len(movies_dict)
         print(f"\nAverage rating: {average_rating}")
 
