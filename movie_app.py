@@ -1,4 +1,11 @@
 import statistics
+import requests
+import os
+from dotenv import load_dotenv
+
+API_KEY = "f86d81ee"
+URL = f"https://www.omdbapi.com/?apikey={API_KEY}"
+
 
 class MovieApp:
     def __init__(self, storage):
@@ -12,6 +19,24 @@ class MovieApp:
 
         for title in titles:
             print(title)
+
+    def _command_add_movie(self, title):
+
+        query_string = f"&t={title}"
+        response = requests.get(URL + query_string)
+        response_json = response.json()
+
+        title = response_json["Title"]
+        year = response_json["Year"]
+        imdb_rating = response_json["Ratings"][0]["Value"]
+        poster_link = response_json["Poster"]
+
+        self._storage.add_movie(title, year, imdb_rating, poster_link)
+
+    def _command_delete_movie(self, title):
+
+        self._storage.delete_movie(title)
+
 
     def _command_movie_stats(self):
         movies = self._storage.list_movies()
