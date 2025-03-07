@@ -17,9 +17,10 @@ class MovieApp:
         movies = self._storage.list_movies()
 
         titles = list(movies.keys())
-
+        print()
+        print(f"A total of {len(titles)} movies in your storage.")
         for title in titles:
-            print(title)
+            print(f"-  {title}")
 
     def _command_add_movie(self, title):
 
@@ -79,6 +80,8 @@ class MovieApp:
         min_rank = min(movies_dict, key=movies_dict.get)
         print(f"Worst rating-> {min_rank}: {movies_dict[min_rank]}")
         print()
+
+
     def _command_random_movie(self):
         movies = self._storage.list_movies()
 
@@ -154,7 +157,122 @@ class MovieApp:
         print("Website generated successfully.")
 
     def run(self):
-        pass
-      # Print menu
-      # Get use command
-      # Execute command
+        movies = self._storage.list_movies()
+
+        while True:
+            print(
+                """
+
+            ********** Welcome to NETFLIX (FÜR ARME) **********
+
+            Menu:
+
+            0.  Exit
+            1.  List movies
+            2.  Add movie
+            3.  Delete Movie
+            4.  Update movie
+            5.  Stats
+            6.  Random movie
+            7.  Search movie
+            8.  Movies sorted by ranking
+            9.  Generate Website
+            """
+            )
+
+            users_selection = input("\nEnter choice (0-8): ")
+
+            if users_selection == "0":
+                print("Bye!")
+                break
+
+            elif users_selection == "1":
+
+                MovieApp._command_list_movies(self)
+
+                move_on = input("\nPress enter to move on\n")
+                if move_on == "":
+                    continue
+
+
+            elif users_selection == "2":
+
+                movie_to_add = input("\nPlease enter a movie you want to add: ")
+
+                if movie_to_add not in movies.keys():
+                    MovieApp._command_add_movie(self, movie_to_add)
+
+                else:
+                    print(f"\n{movie_to_add} already exists in your storage.\n")
+
+                move_on = input("\nPress enter to move on\n")
+
+                if move_on == "":
+                    continue
+
+            elif users_selection == "3":
+
+                movie_to_delete = input("Enter a movie name to delete: ")
+
+                if movie_to_delete in movies.keys():
+                    MovieApp._command_delete_movie(self, movie_to_delete)
+                    print(f"\n{movie_to_delete} successfully deleted from your storage.")
+
+                else:
+                    print(f"\nMovie '{movie_to_delete}' was not found in your storage.")
+
+                move_on = input("\nPress enter to move on\n")
+                if move_on == "":
+                    continue
+
+            elif users_selection == "4":
+
+                print("Soooorrryyy but option 4 is currently under construction")
+
+                move_on = input("Press enter to move on")
+                if move_on == "":
+                    continue
+
+            elif users_selection == "5":
+
+                MovieApp._command_movie_stats(self)
+
+                move_on = input("\nPress enter to move on\n")
+                if move_on == "":
+                    continue
+
+            elif users_selection == "6":
+
+                MovieApp._command_random_movie(self)
+
+                move_on = input("Press enter to move on")
+                if move_on == "":
+                    continue
+
+            elif users_selection == "7":
+
+                MovieApp._command_search_movie(self)
+
+                move_on = input("Press enter to move on")
+                if move_on == "":
+                    continue
+
+            elif users_selection == "8":
+
+                MovieApp._command_sort_movies_by_rating(self)
+
+                move_on = input("Press enter to move on")
+                if move_on == "":
+                    continue
+
+            elif users_selection == "9":
+
+                MovieApp._generate_website(self)
+                print("To open your movies website:")
+                print("step 1 - go to folder 'templates'")
+                print("step 2 - open file 'index.html'")
+                print("step 3 - open the file via IDE built-in pre-view or open local url in your browser(e.g. Chrome)")
+
+                move_on = input("Press enter to move on")
+                if move_on == "":
+                    continue

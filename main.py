@@ -8,9 +8,9 @@ movie_app_json = MovieApp(storage_json)
 movie_app_csv = MovieApp(storage_csv)
 
 
-movie_app_csv._command_add_movie("Forrest Gump")
+movie_app_csv.run()
 
-movie_app_csv._generate_website()
+
 
 
 
