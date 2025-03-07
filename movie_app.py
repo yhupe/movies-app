@@ -105,10 +105,21 @@ class MovieApp:
 
         else:
             print("This field cannot be empty!")
-            search_movie()
+
 
     def _command_sort_movies_by_rating(self):
-        pass
+        movies = self._storage.list_movies()
+
+        sorted_movies_dict = dict(
+            sorted(movies.items(), key=lambda item: item[1]['Rating'], reverse=True)
+        )
+
+        index = 1
+        print()
+        for movie, info in sorted_movies_dict.items():
+            print(f"TOP {index}: Movie: {movie} (IMDb rating: {info['Rating']})")
+            index += 1
+        print()
 
     def _generate_website(self):
         pass

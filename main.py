@@ -10,7 +10,7 @@ movie_app_csv = MovieApp(storage_csv)
 
 
 
-movie_app_csv._command_search_movie()
+movie_app_csv._command_sort_movies_by_rating()
 
 
 
