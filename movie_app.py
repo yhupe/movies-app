@@ -44,7 +44,7 @@ class MovieApp:
                     print(f"Error: API returned status code {response.status_code}")
 
             else:
-                print(f"{response_json['Error']}")
+                print(f"({title}) --- {response_json['Error']}")
 
 
         except requests.exceptions.ConnectionError:
@@ -122,7 +122,36 @@ class MovieApp:
         print()
 
     def _generate_website(self):
-        pass
+        movies = self._storage.list_movies()
+
+        movies_website_content = ""
+
+        if movies:
+
+            for movie, info in movies.items():
+                movies_website_content += f'<li>\n'
+                movies_website_content += f'<div class="movie">\n'
+                movies_website_content += f'<img class="movie-poster" src={info['Poster']} title>\n'
+                movies_website_content += f'<div class="movie-title">{movie}</div>\n'
+                movies_website_content += f'<div class="movie-year">{info['Year']}</div>\n'
+                movies_website_content += f'</div>\n'
+                movies_website_content += f'</li>\n'
+
+
+        with open("_static/index_template.html", "r") as fileobj:
+            page_content = fileobj.readlines()
+
+            html_content_as_string = ""
+
+            for line in page_content:
+                html_content_as_string += f"{line}\n"
+
+        html_with_dynamic_content = html_content_as_string.replace("__TEMPLATE_MOVIE_GRID__", movies_website_content)
+
+        with open("templates/index.html", "w") as fileobj:
+            fileobj.write(html_with_dynamic_content)
+
+        print("Website generated successfully.")
 
     def run(self):
         pass
