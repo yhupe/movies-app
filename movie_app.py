@@ -268,10 +268,10 @@ class MovieApp:
             elif users_selection == "9":
 
                 MovieApp._generate_website(self)
-                print("To open your movies website:")
+                print("\nTo open your movies website:")
                 print("step 1 - go to folder 'templates'")
                 print("step 2 - open file 'index.html'")
-                print("step 3 - open the file via IDE built-in pre-view or open local url in your browser(e.g. Chrome)")
+                print("step 3 - open the file via IDE built-in pre-view or open local url in your browser(e.g. Chrome)\n")
 
                 move_on = input("Press enter to move on")
                 if move_on == "":
