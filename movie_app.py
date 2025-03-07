@@ -1,5 +1,6 @@
 import statistics
 import requests
+import random
 import os
 from dotenv import load_dotenv
 
@@ -78,6 +79,20 @@ class MovieApp:
         min_rank = min(movies_dict, key=movies_dict.get)
         print(f"Worst rating-> {min_rank}: {movies_dict[min_rank]}")
         print()
+    def _command_random_movie(self):
+        movies = self._storage.list_movies()
+
+        random_movie = random.choice(list(movies.keys()))
+
+        print()
+        print(f"Your film for tonight is '{random_movie}' --- Enjoy!!")
+        print()
+
+    def _command_search_movie(self, title):
+        pass
+
+    def _command_sort_movies_by_rating(self):
+        pass
 
     def _generate_website(self):
         pass

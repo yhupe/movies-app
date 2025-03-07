@@ -10,7 +10,7 @@ movie_app_csv = MovieApp(storage_csv)
 
 
 
-movie_app_csv._command_add_movie("Halt die schnauze")
+movie_app_csv._command_random_movie()
 
 
 
