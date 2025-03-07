@@ -10,7 +10,7 @@ movie_app_csv = MovieApp(storage_csv)
 
 
 
-movie_app_csv._command_random_movie()
+movie_app_csv._command_search_movie()
 
 
 

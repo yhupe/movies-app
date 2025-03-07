@@ -88,8 +88,24 @@ class MovieApp:
         print(f"Your film for tonight is '{random_movie}' --- Enjoy!!")
         print()
 
-    def _command_search_movie(self, title):
-        pass
+    def _command_search_movie(self):
+        movies = self._storage.list_movies()
+
+        movie_to_search_part = input("Enter part of movie name: ")
+
+        if movie_to_search_part != "":
+            if movie_to_search_part.lower() in str(movies.keys()).lower():
+                for movie, info in movies.items():
+                    if movie_to_search_part.lower() in movie.lower():
+                        print(f"{movie} (IMDb: {info['Rating']})")
+                print()
+
+            else:
+                print(f"\nNo results found for '{movie_to_search_part}'.\n")
+
+        else:
+            print("This field cannot be empty!")
+            search_movie()
 
     def _command_sort_movies_by_rating(self):
         pass
