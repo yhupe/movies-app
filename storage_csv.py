@@ -4,6 +4,10 @@ import os
 
 
 class StorageCSV(IStorage):
+    """ Class inherits from class IStorage and handles listing, adding,
+    deleting and updating movie information saved as .csv file.
+    """
+
     def __init__(self, file_path):
         self.file_path = file_path
 
@@ -13,7 +17,6 @@ class StorageCSV(IStorage):
                 writer.writerow(['Title', 'Rating', 'Year', 'Poster'])
 
     def list_movies(self):
-        """ Lists all movies in the instantiated database."""
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)
@@ -23,7 +26,8 @@ class StorageCSV(IStorage):
             next(reader)
 
             for line in reader:
-                data[line[0]] = {'Rating':line[1], 'Year':line[2], 'Poster':line[3]}
+                data[line[0]] = {'Rating':line[1], 'Year':line[2],
+                                 'Poster':line[3]}
             #slicing the IMDb rating 'xx.x/10' to xx.x
             data[line[0]]['Rating'] = line[1][:2]
 
@@ -31,7 +35,6 @@ class StorageCSV(IStorage):
 
 
     def add_movie(self, title, year, rating, poster):
-        """ """
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)
@@ -43,7 +46,6 @@ class StorageCSV(IStorage):
             writer.writerow([title, year, rating, poster])
 
     def delete_movie(self, title):
-        """ Deletes a movie from the database"""
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)
@@ -69,8 +71,6 @@ class StorageCSV(IStorage):
 
 
     def update_movie(self, title, rating):
-        """ Updates the ranking of a movie"""
-
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)

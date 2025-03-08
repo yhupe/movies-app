@@ -9,11 +9,19 @@ URL = f"https://www.omdbapi.com/?apikey={API_KEY}"
 
 
 class MovieApp:
+    """ Class handles CLI. It's methods do represent the functionality and
+    available features of the movie app.
+    """
+
     def __init__(self, storage):
         self._storage = storage
 
 
     def _command_list_movies(self):
+        """ Method calls instance storage and prints it's content
+        in a readable format.
+        """
+
         movies = self._storage.list_movies()
 
         titles = list(movies.keys())
@@ -23,6 +31,11 @@ class MovieApp:
             print(f"-  {title}")
 
     def _command_add_movie(self, title):
+        """ Method sends get request to OMDb API and fetches movie data for
+         the respective movie title as follows. After successful get request,
+         the data is stored to the respective file by calling
+         'add_movie' storage method.
+        """
 
         try:
             query_string = f"&t={title}"
@@ -35,14 +48,17 @@ class MovieApp:
 
                     title = response_json["Title"]
                     year = response_json["Year"]
-                    imdb_rating = float(response_json["Ratings"][0]["Value"][:2])
+                    imdb_rating = (
+                        float(response_json["Ratings"][0]["Value"][:2]))
                     poster_link = response_json["Poster"]
 
-                    self._storage.add_movie(title, imdb_rating, year, poster_link)
+                    self._storage.add_movie(title, imdb_rating, year,
+                                            poster_link)
                     print(f"Movie {title} added successfully.")
 
                 else:
-                    print(f"Error: API returned status code {response.status_code}")
+                    print(f"Error: API returned status code "
+                          f"{response.status_code}")
 
             else:
                 print(f"({title}) --- {response_json['Error']}")
@@ -52,11 +68,18 @@ class MovieApp:
             print("Error: connection to OMDb API failed!")
 
     def _command_delete_movie(self, title):
+        """ Method deletes respective title passed to it by calling
+        storage method 'delete_movie'"""
 
         self._storage.delete_movie(title)
 
 
     def _command_movie_stats(self):
+        """ Method calls sorage method 'list_movies' and
+        calculates and then prints various statistics based on the movies
+        stored.
+        """
+
         movies = self._storage.list_movies()
 
         sum_of_values = 0
@@ -83,6 +106,10 @@ class MovieApp:
 
 
     def _command_random_movie(self):
+        """ Takes one random movie title from the storage
+        and prints it.
+        """
+
         movies = self._storage.list_movies()
 
         random_movie = random.choice(list(movies.keys()))
@@ -92,6 +119,11 @@ class MovieApp:
         print()
 
     def _command_search_movie(self):
+        """ Prompts the user to enter a movie title (or only parts of it)
+        and searches the storage for matching movie titles. In case there
+        is one, it prints it to the screen.
+        """
+
         movies = self._storage.list_movies()
 
         movie_to_search_part = input("Enter part of movie name: ")
@@ -111,10 +143,14 @@ class MovieApp:
 
 
     def _command_sort_movies_by_rating(self):
+        """ Sorts all movies stored in descending order
+        according to it's IMDb score. """
+
         movies = self._storage.list_movies()
 
         sorted_movies_dict = dict(
-            sorted(movies.items(), key=lambda item: item[1]['Rating'], reverse=True)
+            sorted(movies.items(), key=lambda item: item[1]['Rating'],
+                   reverse=True)
         )
 
         index = 1
@@ -125,6 +161,12 @@ class MovieApp:
         print()
 
     def _generate_website(self):
+        """ Method takes stored movies and formats it to
+        html code, reads an existing html template and replaces a placeholder
+        with the formatted movies content. Then saves all the html code
+        to an 'index.html' file which then can be loaded in the browser to view.
+        """
+
         movies = self._storage.list_movies()
 
         movies_website_content = ""
@@ -134,9 +176,12 @@ class MovieApp:
             for movie, info in movies.items():
                 movies_website_content += f'<li>\n'
                 movies_website_content += f'<div class="movie">\n'
-                movies_website_content += f'<img class="movie-poster" src={info['Poster']} title>\n'
-                movies_website_content += f'<div class="movie-title">{movie}</div>\n'
-                movies_website_content += f'<div class="movie-year">{info['Year']}</div>\n'
+                movies_website_content += (f'<img class="movie-poster" '
+                                           f'src={info['Poster']} title>\n')
+                movies_website_content += (f'<div class="movie-title">{movie}'
+                                           f'</div>\n')
+                movies_website_content += (f'<div class="movie-year">'
+                                           f'{info['Year']}</div>\n')
                 movies_website_content += f'</div>\n'
                 movies_website_content += f'</li>\n'
 
@@ -149,7 +194,9 @@ class MovieApp:
             for line in page_content:
                 html_content_as_string += f"{line}\n"
 
-        html_with_dynamic_content = html_content_as_string.replace("__TEMPLATE_MOVIE_GRID__", movies_website_content)
+        html_with_dynamic_content = (html_content_as_string.replace
+                                     ("__TEMPLATE_MOVIE_GRID__",
+                                      movies_website_content))
 
         with open("templates/index.html", "w") as fileobj:
             fileobj.write(html_with_dynamic_content)
@@ -157,6 +204,11 @@ class MovieApp:
         print("Website generated successfully.")
 
     def run(self):
+        """ Method consists of a while loop, taking care of an
+        appropriate user experience through the CLI and calls
+        methods above according to what the user enters to the CLI.
+        """
+
         movies = self._storage.list_movies()
 
         while True:
@@ -216,10 +268,12 @@ class MovieApp:
 
                 if movie_to_delete in movies.keys():
                     MovieApp._command_delete_movie(self, movie_to_delete)
-                    print(f"\n{movie_to_delete} successfully deleted from your storage.")
+                    print(f"\n{movie_to_delete} successfully deleted from "
+                          f"your storage.")
 
                 else:
-                    print(f"\nMovie '{movie_to_delete}' was not found in your storage.")
+                    print(f"\nMovie '{movie_to_delete}' was not found in "
+                          f"your storage.")
 
                 move_on = input("\nPress enter to move on\n")
                 if move_on == "":
@@ -227,7 +281,7 @@ class MovieApp:
 
             elif users_selection == "4":
 
-                print("Soooorrryyy but option 4 is currently under construction")
+                print("Soorryyy but option 4 is currently under construction")
 
                 move_on = input("Press enter to move on")
                 if move_on == "":
@@ -271,7 +325,8 @@ class MovieApp:
                 print("\nTo open your movies website:")
                 print("step 1 - go to folder 'templates'")
                 print("step 2 - open file 'index.html'")
-                print("step 3 - open the file via IDE built-in pre-view or open local url in your browser(e.g. Chrome)\n")
+                print("step 3 - open the file via IDE built-in pre-view or "
+                      "open local url in your browser(e.g. Chrome)\n")
 
                 move_on = input("Press enter to move on")
                 if move_on == "":

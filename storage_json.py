@@ -4,6 +4,10 @@ import os
 
 
 class StorageJson(IStorage):
+    """ Class inherits from class IStorage and handles listing, adding,
+        deleting and updating movie information saved as .json file.
+        """
+
     def __init__(self, file_path):
         self.file_path = file_path
 
@@ -12,7 +16,6 @@ class StorageJson(IStorage):
                 json.dump({}, fileobj)
 
     def list_movies(self):
-        """ Lists all movies in the instantiated database."""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
@@ -21,7 +24,6 @@ class StorageJson(IStorage):
 
 
     def add_movie(self, title, rating, year, poster):
-        """ Adds a movie and its information to the database"""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
@@ -39,7 +41,6 @@ class StorageJson(IStorage):
 
 
     def delete_movie(self, title):
-        """ Deletes a movie from the database"""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
@@ -52,8 +53,8 @@ class StorageJson(IStorage):
         with open(self.file_path, "w") as fileobj:
             fileobj.write(json_str)
 
+
     def update_movie(self, title, rating):
-        """ Updates the ranking of a movie"""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
