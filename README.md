@@ -18,7 +18,7 @@ pip install -r requirements
 
 ## How to use
 
-Please instantiate a storage file with with either StorageJson() or StorageCSV() as you prefer it. In the parentheses, please put the name you want to give it. 
+Open the main.py file: Please instantiate a storage file with with either StorageJson() or StorageCSV() as you prefer it. In the parentheses, please put the name you want to give it. 
 With that being done, please instatiate your movie app with MovieApp('your storage instance') and simply run the application with the .run() ending after your application instance, as shown below. Further instructions will be shown in the CLI.
 
 ```python
