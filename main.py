@@ -12,10 +12,8 @@ movie_app_json = MovieApp(storage_json)
 movie_app_csv = MovieApp(storage_csv)
 
 # Calling MovieApp.run() to start the application
-movie_app_csv.run()
+def main():
+    movie_app_csv.run()
 
-
-
-
-
-
+if __name__ == '__main__':
+    main()
