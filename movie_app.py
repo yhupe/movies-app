@@ -4,8 +4,13 @@ import random
 import os
 from dotenv import load_dotenv
 
-API_KEY = "f86d81ee"
-URL = f"https://www.omdbapi.com/?apikey={API_KEY}"
+
+load_dotenv()
+
+api_key = os.getenv("API_KEY")
+
+URL = f"https://www.omdbapi.com/?apikey={api_key}"
+
 
 
 class MovieApp:
