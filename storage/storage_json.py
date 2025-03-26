@@ -3,8 +3,29 @@ import json
 import os
 
 
+def read_json_data(file_path):
+    """Function to support reading .json files,
+    returns dictionary of dictionaries, if no file found under
+    file path, empty dictionary is returned."""
+
+    try:
+        with open(file_path, "r") as fileobj:
+            return json.loads(fileobj.read())
+    except FileNotFoundError:
+        return {}
+
+def write_json_data(file_path, data):
+    """Function so support writing .json files after CRUD actions made,
+     to safe latest version of .json storage.
+     Returns nothing. """
+
+    json_str = json.dumps(data)
+    with open(file_path, "w") as fileobj:
+        fileobj.write(json_str)
+
+
 class StorageJson(IStorage):
-    """ Class inherits from class IStorage and handles listing, adding,
+    """Class inherits from class IStorage and handles listing, adding,
         deleting and updating movie information saved as .json file.
         """
 
@@ -19,17 +40,13 @@ class StorageJson(IStorage):
         """Class Method to fetch all existing movie records from
         .json file storage, returns a dict of dicts."""
 
-        with open(self.file_path, "r") as fileobj:
-            data = json.loads(fileobj.read())
-
-        return data
+        return read_json_data(self.file_path)
 
     def add_movie(self, title, rating, year, poster):
         """ Reads all existing movies, adds a new movie record as passed
         to the method and saves new movie record along with all records to .json file"""
 
-        with open(self.file_path, "r") as fileobj:
-            data = json.loads(fileobj.read())
+        data = read_json_data(self.file_path)
 
         data[title] = {
             "Rating": rating,
@@ -37,32 +54,24 @@ class StorageJson(IStorage):
             "Poster": poster
         }
 
-        json_str = json.dumps(data)
-
-        with open(self.file_path, "w") as fileobj:
-            fileobj.write(json_str)
+        write_json_data(self.file_path, data)
 
     def delete_movie(self, title):
         """Reads all existing movies, deletes a movie record as passed
         to the method and saves remaining movie records .json file"""
 
-        with open(self.file_path, "r") as fileobj:
-            data = json.loads(fileobj.read())
+        data = read_json_data(self.file_path)
 
-            if title in data.keys():
-                data.pop(title)
+        if title in data.keys():
+            data.pop(title)
 
-        json_str = json.dumps(data)
-
-        with open(self.file_path, "w") as fileobj:
-            fileobj.write(json_str)
+        write_json_data(self.file_path, data)
 
     def update_movie(self, title, rating):
         """Reads all existing movies, updates a movie record as passed
         to the method and saves updated movie record along with existing records to .json file"""
 
-        with open(self.file_path, "r") as fileobj:
-            data = json.loads(fileobj.read())
+        data = read_json_data(self.file_path)
 
         list_of_all_data = data.copy()
 
@@ -73,7 +82,4 @@ class StorageJson(IStorage):
                 list_of_all_data[movie_index_to_be_updated]["Film name"] = title
                 list_of_all_data[movie_index_to_be_updated]["Rating"] = rating
 
-        json_str = json.dumps(list_of_all_data)
-
-        with open(self.file_path, "w") as fileobj:
-            fileobj.write(json_str)
+        write_json_data(self.file_path, data)
