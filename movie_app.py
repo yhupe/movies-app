@@ -51,8 +51,13 @@ class MovieApp:
 
                     title = response_json["Title"]
                     year = response_json["Year"]
-                    imdb_rating = (
-                        float(response_json["Ratings"][0]["Value"][:2]))
+                    try:
+                        imdb_rating = (
+                            float(response_json["Ratings"][0]["Value"][:2]))
+
+                    except IndexError:
+                        imdb_rating = "N/A"
+
                     poster_link = response_json["Poster"]
 
                     self._storage.add_movie(title, imdb_rating, year,
@@ -64,7 +69,7 @@ class MovieApp:
                           f"{response.status_code}")
 
             else:
-                print(f"({title}) --- {response_json['Error']}")
+                print(f"('{title}') --- {response_json['Error']}")
 
         except requests.exceptions.ConnectionError:
             print("Error: connection to OMDb API failed!")
@@ -76,7 +81,7 @@ class MovieApp:
         self._storage.delete_movie(title)
 
     def _command_movie_stats(self):
-        """ Method calls sorage method 'list_movies' and
+        """ Method calls storage method 'list_movies' and
         calculates and then prints various statistics based on the movies
         stored.
         """
@@ -208,9 +213,10 @@ class MovieApp:
         methods above according to what the user enters to the CLI.
         """
 
-        movies = self._storage.list_movies()
-
         while True:
+
+            movies = self._storage.list_movies()
+
             print(
                 """
 

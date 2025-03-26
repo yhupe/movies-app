@@ -60,7 +60,7 @@ class StorageCSV(IStorage):
 
         return read_csv_data(self.file_path)
 
-    def add_movie(self, title, year, rating, poster):
+    def add_movie(self, title, rating, year, poster):
         """ Reads all existing movies, adds a new movie record as passed
         to the method and saves new movie record along with all records to .csv file"""
 
@@ -73,6 +73,7 @@ class StorageCSV(IStorage):
         to the method and saves remaining movie records .csv file"""
 
         data = read_csv_data(self.file_path)
+
         if title in data:
             del data[title]
 
