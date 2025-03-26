@@ -17,6 +17,8 @@ class StorageCSV(IStorage):
                 writer.writerow(['Title', 'Rating', 'Year', 'Poster'])
 
     def list_movies(self):
+        """Class Method to fetch all existing movie records from
+                .csv file storage, returns a dict of dicts."""
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)
@@ -33,8 +35,9 @@ class StorageCSV(IStorage):
 
             return data
 
-
     def add_movie(self, title, year, rating, poster):
+        """ Reads all existing movies, adds a new movie record as passed
+        to the method and saves new movie record along with all records to .csv file"""
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)
@@ -46,6 +49,8 @@ class StorageCSV(IStorage):
             writer.writerow([title, year, rating, poster])
 
     def delete_movie(self, title):
+        """Reads all existing movies, deletes a movie record as passed
+        to the method and saves remaining movie records .csv file"""
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)
@@ -69,8 +74,9 @@ class StorageCSV(IStorage):
             writer = csv.writer(fileobj)
             writer.writerows(existing_data)
 
-
     def update_movie(self, title, rating):
+        """Reads all existing movies, updates a movie record as passed
+        to the method and saves updated movie record along with existing records to .csv file"""
 
         with open(self.file_path, "r") as fileobj:
             reader = csv.reader(fileobj)

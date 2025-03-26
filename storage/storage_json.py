@@ -16,14 +16,17 @@ class StorageJson(IStorage):
                 json.dump({}, fileobj)
 
     def list_movies(self):
+        """Class Method to fetch all existing movie records from
+        .json file storage, returns a dict of dicts."""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
 
         return data
 
-
     def add_movie(self, title, rating, year, poster):
+        """ Reads all existing movies, adds a new movie record as passed
+        to the method and saves new movie record along with all records to .json file"""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
@@ -39,8 +42,9 @@ class StorageJson(IStorage):
         with open(self.file_path, "w") as fileobj:
             fileobj.write(json_str)
 
-
     def delete_movie(self, title):
+        """Reads all existing movies, deletes a movie record as passed
+        to the method and saves remaining movie records .json file"""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())
@@ -53,8 +57,9 @@ class StorageJson(IStorage):
         with open(self.file_path, "w") as fileobj:
             fileobj.write(json_str)
 
-
     def update_movie(self, title, rating):
+        """Reads all existing movies, updates a movie record as passed
+        to the method and saves updated movie record along with existing records to .json file"""
 
         with open(self.file_path, "r") as fileobj:
             data = json.loads(fileobj.read())

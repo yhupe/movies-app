@@ -12,7 +12,6 @@ api_key = os.getenv("API_KEY")
 URL = f"https://www.omdbapi.com/?apikey={api_key}"
 
 
-
 class MovieApp:
     """ Class handles CLI. It's methods do represent the functionality and
     available features of the movie app.
@@ -20,7 +19,6 @@ class MovieApp:
 
     def __init__(self, storage):
         self._storage = storage
-
 
     def _command_list_movies(self):
         """ Method calls instance storage and prints it's content
@@ -68,7 +66,6 @@ class MovieApp:
             else:
                 print(f"({title}) --- {response_json['Error']}")
 
-
         except requests.exceptions.ConnectionError:
             print("Error: connection to OMDb API failed!")
 
@@ -77,7 +74,6 @@ class MovieApp:
         storage method 'delete_movie'"""
 
         self._storage.delete_movie(title)
-
 
     def _command_movie_stats(self):
         """ Method calls sorage method 'list_movies' and
@@ -108,7 +104,6 @@ class MovieApp:
         min_rank = min(movies_dict, key=movies_dict.get)
         print(f"Worst rating-> {min_rank}: {movies_dict[min_rank]}")
         print()
-
 
     def _command_random_movie(self):
         """ Takes one random movie title from the storage
@@ -145,7 +140,6 @@ class MovieApp:
 
         else:
             print("This field cannot be empty!")
-
 
     def _command_sort_movies_by_rating(self):
         """ Sorts all movies stored in descending order
@@ -237,7 +231,7 @@ class MovieApp:
             """
             )
 
-            users_selection = input("\nEnter choice (0-8): ")
+            users_selection = input("\nEnter choice (0-9): ")
 
             if users_selection == "0":
                 print("Bye!")
@@ -250,7 +244,6 @@ class MovieApp:
                 move_on = input("\nPress enter to move on\n")
                 if move_on == "":
                     continue
-
 
             elif users_selection == "2":
 
